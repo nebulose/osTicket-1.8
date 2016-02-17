@@ -30,7 +30,7 @@ if(OSTINSTALLED!=TRUE){
 }
 
 if(!$_ENV["VCAP_SERVICES"]){
-    if(!$_ENV["OST_TABLE_PREFIX"] || !$_ENV["OST_SECRET_SALT"]) || !$_ENV["OST_ADMIN_EMAIL"]) {
+    if(!$_ENV["OST_TABLE_PREFIX"] || !$_ENV["OST_SECRET_SALT"] || !$_ENV["OST_ADMIN_EMAIL"]) {
         die("OST_* env variables not found");
     }
 
