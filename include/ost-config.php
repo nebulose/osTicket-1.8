@@ -21,8 +21,12 @@ if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__)) || !defined
     die('kwaheri rafiki!');
 
 #Install flag
-define('OSTINSTALLED',TRUE);
-if(OSTINSTALLED!=TRUE){
+if (getenv("OST_INSTALLED")) {
+    define('OSTINSTALLED',getenv("OST_INSTALLED"));
+else {
+    define('OSTINSTALLED',FALSE);
+}
+if(OSTINSTALLED==FALSE){
     if(!file_exists(ROOT_DIR.'setup/install.php')) die('Error: Contact system admin.'); //Something is really wrong!
     //Invoke the installer.
     header('Location: '.ROOT_PATH.'setup/install.php');
@@ -30,7 +34,7 @@ if(OSTINSTALLED!=TRUE){
 }
 
 if(!getenv("VCAP_SERVICES")){
-    if(!getenv("OST_TABLE_PREFIX"] || !getenv("OST_SECRET_SALT") || !getenv("OST_ADMIN_EMAIL")) {
+    if(!getenv("OST_TABLE_PREFIX") || !getenv("OST_SECRET_SALT") || !getenv("OST_ADMIN_EMAIL")) {
         die("OST_* env variables not found");
     }
 
