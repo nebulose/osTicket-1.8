@@ -23,7 +23,7 @@ if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__)) || !defined
 #Install flag
 if (getenv("OST_INSTALLED")) {
     define('OSTINSTALLED',getenv("OST_INSTALLED"));
-else {
+} else {
     define('OSTINSTALLED',FALSE);
 }
 if(OSTINSTALLED==FALSE){
