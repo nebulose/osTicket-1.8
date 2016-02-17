@@ -21,7 +21,7 @@ if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__)) || !defined
     die('kwaheri rafiki!');
 
 #Install flag
-if ($_ENV["OST_INSTALLED"]) {
+if (array_key_exists("OST_INSTALLED", $_ENV)) {
     define('OSTINSTALLED',$_ENV["OST_INSTALLED"]);
 } else {
     define('OSTINSTALLED',FALSE);
@@ -33,12 +33,12 @@ if(OSTINSTALLED==FALSE){
     exit;
 }
 
-if(!$_ENV["VCAP_SERVICES"]){
-    if(!$_ENV["OST_TABLE_PREFIX"] || !$_ENV["OST_SECRET_SALT"] || !$_ENV["OST_ADMIN_EMAIL"]) {
+if(array_key_exists("VCAP_SERVICES", $_ENV)){
+    if(!array_key_exists("OST_TABLE_PREFIX", $_ENV) || !array_key_exists("OST_SECRET_SALT", $_ENV) || !array_key_exists("OST_ADMIN_EMAIL", $_ENV)) {
         die("OST_* env variables not found");
     }
 
-    $vcap_services = json_decode($_ENV["VCAP_SERVICES" ]);
+    $vcap_services = json_decode($_ENV["VCAP_SERVICES"]);
     if($vcap_services->{'mysql-5.5'}){ //if "mysql" db service is bound to this application
         $db = $vcap_services->{'mysql-5.5'}[0]->credentials;
     } else if($vcap_services->{'cleardb'}){ //if cleardb mysql db service is bound to this application
