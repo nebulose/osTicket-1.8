@@ -21,8 +21,8 @@ if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__)) || !defined
     die('kwaheri rafiki!');
 
 #Install flag
-if (getenv("OST_INSTALLED")) {
-    define('OSTINSTALLED',getenv("OST_INSTALLED"));
+if ($_ENV["OST_INSTALLED"]) {
+    define('OSTINSTALLED',$_ENV["OST_INSTALLED"]);
 } else {
     define('OSTINSTALLED',FALSE);
 }
@@ -33,12 +33,12 @@ if(OSTINSTALLED==FALSE){
     exit;
 }
 
-if(!getenv("VCAP_SERVICES")){
-    if(!getenv("OST_TABLE_PREFIX") || !getenv("OST_SECRET_SALT") || !getenv("OST_ADMIN_EMAIL")) {
+if(!$_ENV["VCAP_SERVICES"]){
+    if(!$_ENV["OST_TABLE_PREFIX"] || !$_ENV["OST_SECRET_SALT"] || !$_ENV["OST_ADMIN_EMAIL"]) {
         die("OST_* env variables not found");
     }
 
-    $vcap_services = json_decode(getenv("VCAP_SERVICES" ));
+    $vcap_services = json_decode($_ENV["VCAP_SERVICES" ]);
     if($vcap_services->{'mysql-5.5'}){ //if "mysql" db service is bound to this application
         $db = $vcap_services->{'mysql-5.5'}[0]->credentials;
     } else if($vcap_services->{'cleardb'}){ //if cleardb mysql db service is bound to this application
@@ -47,10 +47,10 @@ if(!getenv("VCAP_SERVICES")){
         echo "Error: No suitable MySQL database bound to the application. <br>";
         die();
     }
-    define('SECRET_SALT', getenv("OST_SECRET_SALT"));
+    define('SECRET_SALT', $_ENV["OST_SECRET_SALT"]);
 
     #Default admin email. Used only on db connection issues and related alerts.
-    define('ADMIN_EMAIL', getenv("OST_ADMIN_EMAIL"));
+    define('ADMIN_EMAIL', $_ENV["OST_ADMIN_EMAIL"]);
 
     # Database Options
     # ---------------------------------------------------
@@ -62,7 +62,7 @@ if(!getenv("VCAP_SERVICES")){
     define('DBPASS', $db->password);
 
     # Table prefix
-    define('TABLE_PREFIX', getenv("OST_ADMIN_EMAIL"));
+    define('TABLE_PREFIX', $_ENV["OST_ADMIN_EMAIL"]);
 
 } else {
     die("VCAP_SERVICES env variable not found");
