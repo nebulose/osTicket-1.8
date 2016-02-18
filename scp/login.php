@@ -29,8 +29,10 @@ if($_POST) {
     // use a different CSRF token. This will help ward off both parallel and
     // serial brute force attacks, because new tokens will have to be
     // requested for each attempt.
-    if (!$ost->checkCSRFToken())
-        Http::response(400, 'Valid CSRF Token Required');
+    if (!$ost->checkCSRFToken()) {
+        // Http::response(400, 'Valid CSRF Token Required');
+        exit;
+    }
 
     // Rotate the CSRF token (original cannot be reused)
     $ost->getCSRF()->rotate();
