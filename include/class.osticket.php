@@ -116,6 +116,7 @@ class osTicket {
             return true;
         }
 
+        var_dump($this->getCSRF()); echo "\n";
         if(isset($_SERVER['HTTP_X_CSRFTOKEN']) && $this->validateCSRFToken($_SERVER['HTTP_X_CSRFTOKEN']))
             return true;
 
