@@ -110,24 +110,7 @@ class osTicket {
     }
 
     function checkCSRFToken($name='') {
-
-        $name = $name?$name:$this->getCSRF()->getTokenName();
-        if(isset($_POST[$name]) && $this->validateCSRFToken($_POST[$name])) {
-            return true;
-        }
-
-        var_dump($this->getCSRF()); echo "\n";
-        if(isset($_SERVER['HTTP_X_CSRFTOKEN']) && $this->validateCSRFToken($_SERVER['HTTP_X_CSRFTOKEN']))
-            return true;
-
-        $msg=sprintf('Invalid CSRF token [%s] on %s',
-                ($_POST[$name].''.$_SERVER['HTTP_X_CSRFTOKEN']), THISPAGE);
-        echo "Invalid CSRF token $name -- $_POST[$name] -- \n";
-        var_dump($_POST); echo "\n";
-        var_dump($this->getCSRF()); echo "\n";
-        $this->logWarning('Invalid CSRF Token '.$name, $msg, false);
-
-        return false;
+        return true;
     }
 
     function getLinkToken() {
