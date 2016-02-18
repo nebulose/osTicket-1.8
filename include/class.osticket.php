@@ -121,8 +121,9 @@ class osTicket {
 
         $msg=sprintf('Invalid CSRF token [%s] on %s',
                 ($_POST[$name].''.$_SERVER['HTTP_X_CSRFTOKEN']), THISPAGE);
-        echo "Invalid CSRF token $name -- $_POST[$name] -- ";
-        var_dump($_POST);
+        echo "Invalid CSRF token $name -- $_POST[$name] -- \n";
+        var_dump($_POST); echo "\n";
+        var_dump($this->getCSRF()); echo "\n";
         $this->logWarning('Invalid CSRF Token '.$name, $msg, false);
 
         return false;
